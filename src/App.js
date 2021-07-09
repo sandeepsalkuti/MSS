@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Login from "./components/signup/login.component";
 import Register from "./components/signup/register.component";
 import Landing from "./components/mainactivity/landingpage.component";
+import CheckInForm from "./components/checkinform/CheckInForm";
 
 function App() {
   return (
@@ -32,6 +33,12 @@ function App() {
                     Home
                   </Link>
                 </li>
+
+                <li className="nav-item">
+                  <Link className="nav-link" to={"/CheckIn"}>
+                    CheckIn
+                  </Link>
+                </li>
               </ul>
             </div>
           </div>
@@ -44,6 +51,7 @@ function App() {
               <Route path="/Login" component={Login} />
               <Route path="/Register" component={Register} />
               <Route path="/Landing" component={Landing} />
+              <Route path="/CheckIn" component={CheckInForm} />
             </Switch>
           </div>
         </div>

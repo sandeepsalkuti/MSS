@@ -123,14 +123,25 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 const Schema = yup.object().shape({
   firstName: yup.string().required("first name is required").min(5),
   lastName: yup.string().required("last name is required"),
-  email: yup.string().required("Email is required").email("Email is invalid"),
+  email: yup
+    .string()
+    .required("Email is required")
+    .email("Email is invalid")
+    .matches(
+      /^[a-zA-Z0-9]+@miraclesoft\.com$/,
+      "Email must match company domain"
+    ),
   password: yup
     .string()
-    .required("Do not let crackers break into your account!")
-    .min(8),
-  // confirmPassword: yup
-  // 	.string()
-  // 	.oneOf([yup.ref("password"), null], "Wait! Your password doesn't match.."),
+    .required("Password is required.")
+    // .min(5).max(12)
+    .matches(
+      /^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/,
+      "Password must contain at least 8 characters, one uppercase, one number and one special case character"
+    ),
+  confirmpassword: yup
+    .string()
+    .oneOf([yup.ref("password"), null], "Wait! Your password doesn't match.."),
 });
 
 function Register() {
@@ -139,10 +150,8 @@ function Register() {
   });
 
   const onSubmitHandler = (data) => {
-    console.log(data);
+    console.log("formdata:", data);
   };
-
-  console.log(errors);
 
   return (
     <div>
@@ -154,14 +163,13 @@ function Register() {
             type="text"
             className="form-control"
             name="firstName"
-            id="firstName"
             placeholder="First name"
             ref={register}
           />
-
-          {/* {errors.firstName && <p>{errors.firstName.message}</p>} */}
+          <div className="error-msg">
+            {errors.firstName && <p>{errors.firstName.message}</p>}
+          </div>
         </div>
-        <p>{errors.firstName?.message}</p>
 
         <div className="form-group">
           <label>Last name</label>
@@ -169,14 +177,13 @@ function Register() {
             type="text"
             className="form-control"
             name="lastName"
-            id="lastName"
             placeholder="Last name"
             ref={register}
           />
-
-          {/* {errors.lastName && <p>{errors.lastName.message}</p>} */}
+          <div className="error-msg">
+            {errors.lastName && <p>{errors.lastName.message}</p>}
+          </div>
         </div>
-        <p>{errors.lastName?.message}</p>
 
         <div className="form-group">
           <label>Email</label>
@@ -184,14 +191,13 @@ function Register() {
             type="email"
             className="form-control"
             name="email"
-            id="email"
             placeholder="Enter email"
             ref={register}
           />
-
-          {/* {errors.email && <p>{errors.email.message}</p>} */}
+          <div className="error-msg">
+            {errors.email && <p>{errors.email.message}</p>}
+          </div>
         </div>
-        <p>{errors.email?.message}</p>
 
         <div className="form-group">
           <label>Password</label>
@@ -199,14 +205,27 @@ function Register() {
             type="password"
             className="form-control"
             name="password"
-            id="password"
             placeholder="Enter password"
             ref={register}
           />
-
-          {/* {errors.password && <p>{errors.password.message}</p>} */}
+          <div className="error-msg">
+            {errors.password && <p>{errors.password.message}</p>}
+          </div>
         </div>
-        <p>{errors.password?.message}</p>
+
+        <div className="form-group">
+          <label>Confirm Password</label>
+          <input
+            type="password"
+            className="form-control"
+            name="confirmpassword"
+            placeholder="Re-enter password"
+            ref={register}
+          />
+          <div className="error-msg">
+            {errors.confirmpassword && <p>{errors.confirmpassword.message}</p>}
+          </div>
+        </div>
 
         <button type="submit" className="btn btn-dark btn-lg btn-block">
           Register
