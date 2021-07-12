@@ -7,6 +7,13 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 const ChekInForm = () => {
   const [inputList, setInputList] = useState([{ skill: "", rating: "" }]);
 
+  const handleInputChange = (e, index) => {
+    const { name, value } = e.target;
+    const list = [...inputList];
+    list[index][name] = value;
+    setInputList(list);
+  };
+
   const handleRemoveClick = (index) => {
     const list = [...inputList];
     list.splice(index, 1);
@@ -23,6 +30,7 @@ const ChekInForm = () => {
 
   const onSubmitHandler = (data) => {
     // console.log("file uploaded successfully: ", data.image[0]);
+    data["skillsresult"] = JSON.stringify(inputList);
     console.log("file uploaded successfully: ", data);
   };
 
@@ -67,14 +75,18 @@ const ChekInForm = () => {
                 <input
                   name="skill"
                   placeholder="Enter Skill"
+                  value={x.skill}
+                  onChange={(e) => handleInputChange(e, i)}
                   className="skillcss"
-                  ref={register}
+                  //ref={register}
                 />
                 <input
                   className="ml10"
                   name="rating"
+                  value={x.rating}
+                  onChange={(e) => handleInputChange(e, i)}
                   placeholder="Enter Rating"
-                  ref={register}
+                  //ref={register}
                 />
                 <div className="btn-box">
                   {inputList.length !== 1 && (
