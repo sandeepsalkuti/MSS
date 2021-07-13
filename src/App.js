@@ -5,6 +5,7 @@ import Login from "./components/signup/login.component";
 import Register from "./components/signup/register.component";
 import Landing from "./components/mainactivity/landingpage.component";
 import CheckInForm from "./components/checkinform/CheckInForm";
+import DailyActivity from "./components/dailyactivity/DailyActivity";
 
 function App() {
   return (
@@ -39,6 +40,12 @@ function App() {
                     CheckIn
                   </Link>
                 </li>
+
+                <li className="nav-item">
+                  <Link className="nav-link" to={"/DailyActivity"}>
+                    DailyActivity
+                  </Link>
+                </li>
               </ul>
             </div>
           </div>
@@ -52,6 +59,7 @@ function App() {
               <Route path="/Register" component={Register} />
               <Route path="/Landing" component={Landing} />
               <Route path="/CheckIn" component={CheckInForm} />
+              <Route path="/DailyActivity" component={DailyActivity} />
             </Switch>
           </div>
         </div>

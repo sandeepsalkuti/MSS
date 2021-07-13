@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 
 //import styles from './landingpage.component.css';
 import UserActivity from "../useractivity/UserActivity";
 import UserDetails from "../userdetails/UserDetails";
 import Button from "../styledcomponents/Button/Button";
 
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
 const LandingPage = () => {
   const detailsHandler = () => {

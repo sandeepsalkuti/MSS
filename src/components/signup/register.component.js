@@ -113,11 +113,12 @@
 
 // export default Register;
 
-import React, { useRef } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import axios from "axios";
+import { BrowserRouter as Link } from "react-router-dom";
 
 // Validation Schema using Yup
 const Schema = yup.object().shape({
@@ -151,6 +152,14 @@ function Register() {
 
   const onSubmitHandler = (data) => {
     console.log("formdata:", data);
+    axios.post("http://localhost:3007/register/", data).then(
+      (response) => {
+        console.log(response);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   };
 
   return (

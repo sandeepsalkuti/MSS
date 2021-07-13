@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import GooglePlaces from "../GooglePlaces";
+import axios from "axios";
 import "../checkinform/CheckinForm.css";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 const ChekInForm = () => {
   const [inputList, setInputList] = useState([{ skill: "", rating: "" }]);
@@ -24,14 +24,31 @@ const ChekInForm = () => {
     setInputList([...inputList, { skill: "", rating: "" }]);
   };
 
-  const { handleSubmit, register, errors } = useForm({
+  const { handleSubmit, register } = useForm({
     //resolver: yupResolver(Schema),
   });
 
   const onSubmitHandler = (data) => {
     // console.log("file uploaded successfully: ", data.image[0]);
+    //data.image[1] = JSON.stringify(data.image[1]);
     data["skillsresult"] = JSON.stringify(inputList);
+    data["image"] = data.image;
     console.log("file uploaded successfully: ", data);
+    axios
+      .post("http://localhost:3007/checkin/", data, {
+        headers: {
+          "Content-Type": "application/json",
+          //Accept: "application/pdf",
+        },
+      })
+      .then(
+        (response) => {
+          console.log(response);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
   };
 
   return (
@@ -69,37 +86,46 @@ const ChekInForm = () => {
 
         <div className="form-group">
           <label>Enter Your Skillset</label>
-          {inputList.map((x, i) => {
+          {Object.entries(inputList).map((x, i) => {
             return (
-              <div className="box">
+              <div className="box" key={i}>
                 <input
                   name="skill"
                   placeholder="Enter Skill"
                   value={x.skill}
+                  key={i}
                   onChange={(e) => handleInputChange(e, i)}
-                  className="skillcss"
+                  className="form-control"
                   //ref={register}
                 />
+                {/* <div className="ml10"> */}
                 <input
-                  className="ml10"
+                  className="form-control form-rating"
                   name="rating"
                   value={x.rating}
+                  key={i + 1}
                   onChange={(e) => handleInputChange(e, i)}
                   placeholder="Enter Rating"
                   //ref={register}
                 />
+                {/* </div> */}
                 <div className="btn-box">
                   {inputList.length !== 1 && (
                     <button
-                      className="mr10"
+                      className="mr10 btn btn-danger"
                       onClick={() => handleRemoveClick(i)}
                     >
-                      Remove
+                      <i className="fa fa-minus" aria-hidden="true"></i>
                     </button>
                   )}
                   {inputList.length - 1 === i && (
-                    <button className="mr10" onClick={handleAddClick}>
-                      Add
+                    <button
+                      className="mr10 btn btn-primary text-center"
+                      onClick={handleAddClick}
+                    >
+                      <i className="fa fa-plus-circle" aria-hidden="false">
+                        Add
+                      </i>
                     </button>
                   )}
                 </div>
@@ -108,7 +134,7 @@ const ChekInForm = () => {
           })}
         </div>
 
-        <button type="submit" className="btn btn-dark btn-md btn-block">
+        <button type="submit" className="btn btn-primary btn-md btn-block">
           Submit
         </button>
       </form>

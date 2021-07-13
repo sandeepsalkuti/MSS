@@ -1,8 +1,8 @@
-import React, { useRef } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+// import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 const Schema = yup.object().shape({
   loginemail: yup
@@ -15,7 +15,7 @@ const Schema = yup.object().shape({
     ),
   loginpwd: yup
     .string()
-    .required("Password is required.")
+    //.required("Password is required.")
     // .min(5).max(12)
     .matches(
       /^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/,

@@ -30,7 +30,10 @@ export default function GooglePlaces() {
             {/* <p>Latitude: {coordinates.lat}</p>
             <p>Longitude: {coordinates.lng}</p> */}
 
-            <input {...getInputProps({ placeholder: "Type address" })} />
+            <input
+              className="form-control"
+              {...getInputProps({ placeholder: "Type address" })}
+            />
 
             <div>
               {loading ? <div>...loading</div> : null}
