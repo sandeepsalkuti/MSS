@@ -29,10 +29,8 @@ const ChekInForm = () => {
   });
 
   const onSubmitHandler = (data) => {
-    // console.log("file uploaded successfully: ", data.image[0]);
-    //data.image[1] = JSON.stringify(data.image[1]);
     data["skillsresult"] = JSON.stringify(inputList);
-    data["image"] = data.image;
+    data["file"] = data.image[0].name;
     console.log("file uploaded successfully: ", data);
     axios
       .post("http://localhost:3007/checkin/", data, {
