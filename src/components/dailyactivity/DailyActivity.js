@@ -104,9 +104,7 @@ import axios from "axios";
 import "font-awesome/css/font-awesome.min.css";
 
 const DailyActivity = () => {
-  const [inputList, setInputList] = useState([
-    { project: "", tasks: "", status: "" },
-  ]);
+  const [inputList, setInputList] = useState([{ task: "", status: "" }]);
 
   const handleInputChange = (e, index) => {
     const { name, value } = e.target;
@@ -122,7 +120,7 @@ const DailyActivity = () => {
   };
 
   const handleAddClick = () => {
-    setInputList([...inputList, { project: "", tasks: "", status: "" }]);
+    setInputList([...inputList, { task: "", status: "" }]);
   };
 
   const { handleSubmit, register } = useForm({
@@ -130,7 +128,7 @@ const DailyActivity = () => {
   });
   const onSubmitHandler = (data) => {
     // console.log("file uploaded successfully: ", data.image[0]);
-    data["skillsresult"] = inputList;
+    // data["skillsresult"] = inputList;
     console.log("file uploaded successfully: ", JSON.stringify(data));
     axios.post("http://localhost:3007/tasks/", data).then(
       (response) => {
@@ -162,6 +160,29 @@ const DailyActivity = () => {
         </div>
 
         <div className="form-group">
+          <label>Enter Tasks</label>
+          <textarea
+            type="text"
+            name="task"
+            className="form-control"
+            placeholder="Enter your tasks"
+            required
+            ref={register}
+          />
+        </div>
+
+        <div className="form-group">
+          <label>Select Status</label>
+          <select ref={register} name="status" className="form-control">
+            <option value="Select Status">Select Status</option>
+            <option value="pending">Pending</option>
+            <option value="In Progress">In progress</option>
+            <option value="Completed">Completed</option>
+            <option value="Hold">Hold</option>
+          </select>
+        </div>
+
+        {/* <div className="form-group">
           <label>Description</label>
           <textarea
             type="description"
@@ -170,14 +191,14 @@ const DailyActivity = () => {
             required
             ref={register}
           />
-        </div>
+        </div> 
 
         <div className="form-group">
           <label>Enter Your Daily Tasks</label>
           {Object.entries(inputList).map((x, i) => {
             return (
               <div className="box" key={i}>
-                <input
+                {/* <input
                   name="project"
                   placeholder="Enter ProjectName"
                   value={x.project}
@@ -185,13 +206,13 @@ const DailyActivity = () => {
                   onChange={(e) => handleInputChange(e, i)}
                   className="form-control"
                   //ref={register}
-                />
-                {/* <div className="ml10"> */}
+                /> 
+                //<div className="ml10"> 
                 <textarea
                   className="form-control form-rating"
-                  name="tasks"
+                  name="task"
                   value={x.task}
-                  key={i + 1}
+                  key={i}
                   onChange={(e) => handleInputChange(e, i)}
                   placeholder="Enter Tasks"
                   //ref={register}
@@ -201,16 +222,17 @@ const DailyActivity = () => {
                   value={x.status}
                   onChange={(e) => handleInputChange(e, i)}
                   name="status"
-                  key={i + 2}
+                  key={i + 1}
                   className="form-control form-select"
                 >
+                  <option value="Select Status">Select Status</option>
                   <option value="pending">Pending</option>
                   <option value="In Progress">In progress</option>
                   <option value="Completed">Completed</option>
                   <option value="Hold">Hold</option>
                 </select>
 
-                {/* </div> */}
+                // </div> 
                 <div className="btn-box">
                   {inputList.length !== 1 && (
                     <button
@@ -234,7 +256,8 @@ const DailyActivity = () => {
               </div>
             );
           })}
-        </div>
+        </div> */}
+
         <button type="submit" className="btn btn-primary btn-md btn-block">
           Submit
         </button>

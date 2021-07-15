@@ -2,7 +2,8 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-// import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+//import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 const Schema = yup.object().shape({
   loginemail: yup
@@ -37,7 +38,7 @@ const Login = () => {
       <form autoComplete="off" onSubmit={handleSubmit(onSubmitHandler)}>
         <h3>Log in</h3>
 
-        <div className="form-group">
+        <div className="form-group required">
           <label>Email</label>
           <input
             type="email"
@@ -51,7 +52,7 @@ const Login = () => {
           </div>
         </div>
 
-        <div className="form-group">
+        <div className="form-group required">
           <label>Password</label>
           <input
             type="password"
@@ -84,6 +85,12 @@ const Login = () => {
           Forgot <a href="#">password?</a>
         </p> */}
       </form>
+
+      <p className="forgot-password text-right">
+        <NavLink className="nav-link" to={"/register"}>
+          New User?
+        </NavLink>
+      </p>
     </div>
   );
 };

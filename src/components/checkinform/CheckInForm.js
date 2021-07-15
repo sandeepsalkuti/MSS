@@ -77,9 +77,19 @@ const ChekInForm = () => {
           </select>
         </div>
 
-        <div className="form-group">
+        {/* <div className="form-group">
           <label>Select your location</label>
           <GooglePlaces className="form-control"></GooglePlaces>
+        </div> */}
+        <div className="form-group">
+          <label>Enter Your Location</label>
+          <input
+            name="location"
+            placeholder="Enter Your Location"
+            className="form-control"
+            required
+            ref={register}
+          />
         </div>
 
         <div className="form-group">
