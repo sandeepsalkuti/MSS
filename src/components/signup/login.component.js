@@ -1,12 +1,16 @@
-import React from "react";
+import React, { useState, useContext } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { NavLink } from "react-router-dom";
-//import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import CheckInForm from '../checkinform/CheckInForm';
+import DailyActivity from '../dailyactivity/DailyActivity';
+import LandingPage from '../mainactivity/landingpage.component'
+import AppContext from "../AppContext";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 const Schema = yup.object().shape({
-  loginemail: yup
+  name: yup
     .string()
     .required("Email is required")
     .email("Email is invalid")
@@ -14,7 +18,7 @@ const Schema = yup.object().shape({
       /^[a-zA-Z0-9]+@miraclesoft\.com$/,
       "Email must match company domain"
     ),
-  loginpwd: yup
+  password: yup
     .string()
     //.required("Password is required.")
     // .min(5).max(12)
@@ -25,12 +29,15 @@ const Schema = yup.object().shape({
 });
 
 const Login = () => {
+  const {loginstatus, loginresponse, loginAsync} = useContext(AppContext)
+ 
   const { handleSubmit, register, errors } = useForm({
     resolver: yupResolver(Schema),
   });
 
   const onSubmitHandler = (data) => {
     console.log("formdata:", data);
+    loginAsync(data)
   };
 
   return (
@@ -43,12 +50,12 @@ const Login = () => {
           <input
             type="email"
             className="form-control"
-            name="loginemail"
+            name="name"
             placeholder="Enter email"
             ref={register}
           />
           <div className="error-msg">
-            {errors.loginemail && <p>{errors.loginemail.message}</p>}
+        {errors.name && <p>{errors.name.message}</p>}
           </div>
         </div>
 
@@ -57,11 +64,12 @@ const Login = () => {
           <input
             type="password"
             className="form-control"
-            name="loginpwd"
+            name="password"
             placeholder="Enter password"
+            ref={register}
           />
           <div className="error-msg">
-            {errors.loginpwd && <p>{errors.loginpwd.message}</p>}
+            {errors.password && <p>{errors.password.message}</p>}
           </div>
         </div>
 
@@ -81,9 +89,9 @@ const Login = () => {
         <button type="submit" className="btn btn-dark btn-lg btn-block">
           Sign in
         </button>
-        {/* <p className="forgot-password text-right">
-          Forgot <a href="#">password?</a>
-        </p> */}
+        <p className="forgot-password text-right">
+         <a href="#">Forget password?</a>
+        </p>
       </form>
 
       <p className="forgot-password text-right">
@@ -91,6 +99,8 @@ const Login = () => {
           New User?
         </NavLink>
       </p>
+      {loginstatus && loginresponse.role === "Bench_Employee" ? 
+      null : ""}
     </div>
   );
 };

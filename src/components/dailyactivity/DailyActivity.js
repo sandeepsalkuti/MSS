@@ -98,13 +98,15 @@
 
 // export default DailyActivity;
 
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import "font-awesome/css/font-awesome.min.css";
+import AppContext from "../AppContext";
 
 const DailyActivity = () => {
   const [inputList, setInputList] = useState([{ task: "", status: "" }]);
+  const {loginstatus, loginresponse} = useContext(AppContext)
 
   const handleInputChange = (e, index) => {
     const { name, value } = e.target;
@@ -126,13 +128,20 @@ const DailyActivity = () => {
   const { handleSubmit, register } = useForm({
     //resolver: yupResolver(Schema),
   });
-  const onSubmitHandler = (data) => {
+  const onSubmitHandler = (data,e) => {
     // console.log("file uploaded successfully: ", data.image[0]);
     // data["skillsresult"] = inputList;
     console.log("file uploaded successfully: ", JSON.stringify(data));
-    axios.post("http://localhost:3007/tasks/", data).then(
+    console.log("login response is:", loginresponse);
+    // console.log(loginresponse.id+"...is id..."+loginresponse.name+"....is email")
+    data={...data,
+          name:loginresponse.name}
+    axios.post(`http://localhost:8022/AddStatus/${loginresponse.id}`, data).then(
       (response) => {
         console.log(response);
+        alert("Data Added Successfully!.. You can add more tasks");
+        e.target.reset();
+
       },
       (error) => {
         console.log(error);
