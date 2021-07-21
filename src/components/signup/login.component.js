@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { NavLink } from "react-router-dom";
-import axios from "axios";
+import CheckInForm from "../checkinform/CheckInForm";
+import DailyActivity from "../dailyactivity/DailyActivity";
 import LandingPage from "../mainactivity/landingpage.component";
-//import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import AppContext from "../AppContext";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 const Schema = yup.object().shape({
   name: yup
@@ -27,24 +29,15 @@ const Schema = yup.object().shape({
 });
 
 const Login = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const { loginstatus, loginresponse, loginAsync } = useContext(AppContext);
+
   const { handleSubmit, register, errors } = useForm({
     resolver: yupResolver(Schema),
   });
 
   const onSubmitHandler = (data) => {
     console.log("formdata:", data);
-    axios.post("http://localhost:3007/login/", data).then(
-      (response) => {
-        // {
-        //   isLoggedIn ? <LandingPage /> : null
-        // }
-        console.log(response);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+    loginAsync(data);
   };
 
   return (
@@ -96,9 +89,9 @@ const Login = () => {
         <button type="submit" className="btn btn-dark btn-lg btn-block">
           Sign in
         </button>
-        {/* <p className="forgot-password text-right">
-          Forgot <a href="#">password?</a>
-        </p> */}
+        <p className="forgot-password text-right">
+          <a href="#">Forget password?</a>
+        </p>
       </form>
 
       <p className="forgot-password text-right">
@@ -106,6 +99,7 @@ const Login = () => {
           New User?
         </NavLink>
       </p>
+      {loginstatus && loginresponse.role === "Bench_Employee" ? null : ""}
     </div>
   );
 };

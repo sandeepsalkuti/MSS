@@ -1,6 +1,8 @@
+import {useContext} from 'react';
+import AppContext from './components/AppContext'
 import "./App.css";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
 import Login from "./components/signup/login.component";
 import Register from "./components/signup/register.component";
 import Landing from "./components/mainactivity/landingpage.component";
@@ -8,6 +10,8 @@ import CheckInForm from "./components/checkinform/CheckInForm";
 import DailyActivity from "./components/dailyactivity/DailyActivity";
 
 function App() {
+  const {loginstatus,registerstatus} = useContext(AppContext)
+  
   return (
     <Router>
       <div className="App">
@@ -29,7 +33,7 @@ function App() {
                   </Link>
                 </li>
 
-                <li className="nav-item">
+                {/* <li className="nav-item">
                   <Link className="nav-link" to={"/Landing"}>
                     Home
                   </Link>
@@ -45,7 +49,7 @@ function App() {
                   <Link className="nav-link" to={"/DailyActivity"}>
                     DailyActivity
                   </Link>
-                </li>
+                </li> */}
               </ul>
             </div>
           </div>
@@ -54,9 +58,19 @@ function App() {
         <div className="outer">
           <div className="inner">
             <Switch>
-              <Route exact path="/" component={Login} />
-              <Route path="/Login" component={Login} />
-              <Route path="/Register" component={Register} />
+              <Route exact path="/">
+                {loginstatus ? <Redirect to="/Landing"/> : <Redirect to="/Login"/>}
+              </Route>
+              <Route path="/Login">
+                {loginstatus ? <Redirect to="/Landing"/> : <Login/>}
+              </Route>
+              <Route path="/Register">
+                {registerstatus ? <Redirect to="/Login"/> : <Register/>}
+              </Route>
+              {/* <Route path="/Logout">
+                {loginstatus ? <Redirect to="/Login"/> : ""}
+              </Route> */}
+              {/* <Route path="/Register" component={Register} /> */}
               <Route path="/Landing" component={Landing} />
               <Route path="/CheckIn" component={CheckInForm} />
               <Route path="/DailyActivity" component={DailyActivity} />

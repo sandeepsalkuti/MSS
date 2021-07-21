@@ -113,13 +113,14 @@
 
 // export default Register;
 
-import React from "react";
+import React,{useContext} from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Login from "./login.component";
 import * as yup from "yup";
 import axios from "axios";
 import "../../App.css";
+import AppContext from "../AppContext";
 import { BrowserRouter as Link, NavLink } from "react-router-dom";
 
 // Validation Schema using Yup
@@ -152,6 +153,8 @@ const Schema = yup.object().shape({
 });
 
 function Register() {
+  const {registerAsync} = useContext(AppContext)
+
   const { handleSubmit, register, errors } = useForm({
     resolver: yupResolver(Schema),
   });
@@ -159,14 +162,8 @@ function Register() {
   const onSubmitHandler = (data) => {
     delete data["mainpassword"];
     console.log("formdata:", data);
-    axios.post("http://localhost:3007/register/", data).then(
-      (response) => {
-        console.log(response);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+    registerAsync(data);
+    
   };
 
   return (
