@@ -36,7 +36,7 @@ export const AppProvider = ({children}) => {
     
     return(
         <AppContext.Provider 
-            value={{loginresponse, loginstatus,registerstatus,setLoginStatus,  loginAsync, registerAsync}}
+            value={{loginresponse, loginstatus,registerstatus,setLoginStatus,loginAsync, registerAsync}}
         >
             {children}
         </AppContext.Provider>

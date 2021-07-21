@@ -89,8 +89,13 @@ const Login = () => {
         <button type="submit" className="btn btn-dark btn-lg btn-block">
           Sign in
         </button>
-        <p className="forgot-password text-right">
+        {/* <p className="forgot-password text-right">
          <a href="#">Forget password?</a>
+        </p> */}
+        <p className="forgot-password text-right">
+        <NavLink className="nav-link" to={"/ResetPassword"}>
+          Forgot password?
+        </NavLink>
         </p>
       </form>
 
