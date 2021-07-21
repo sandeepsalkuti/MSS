@@ -5,7 +5,7 @@ import * as yup from "yup";
 import { NavLink } from "react-router-dom";
 import CheckInForm from '../checkinform/CheckInForm';
 import DailyActivity from '../dailyactivity/DailyActivity';
-import LandingPage from '../mainactivity/landingpage.component'
+import Landing from '../mainactivity/landingpage.component'
 import AppContext from "../AppContext";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
@@ -86,9 +86,11 @@ const Login = () => {
           </div>
         </div>
 
-        <button type="submit" className="btn btn-dark btn-lg btn-block">
+        
+        <button type="submit" className="btn btn-dark btn-lg btn-block" >
           Sign in
         </button>
+        
         <p className="forgot-password text-right">
          <a href="#">Forget password?</a>
         </p>

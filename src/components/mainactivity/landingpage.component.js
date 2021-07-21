@@ -63,7 +63,7 @@ const LandingPage = () => {
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to={"/Logout"}>
+                  <Link className="nav-link" to={"/Login"}>
                     Logout
                   </Link>
                 </li>
