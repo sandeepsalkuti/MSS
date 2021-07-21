@@ -38,6 +38,7 @@ const Login = () => {
   const onSubmitHandler = (data) => {
     console.log("formdata:", data);
     loginAsync(data);
+
   };
 
   return (
@@ -102,7 +103,7 @@ const Login = () => {
           New User?
         </NavLink>
       </p>
-      {loginstatus && loginresponse.role === "Bench_Employee" ? null : ""}
+      {loginresponse.role === "Bench_Employee" ? null : ""}
       </form>
     </div>
     
