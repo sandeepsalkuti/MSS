@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { NavLink } from "react-router-dom";
+import axios from "axios";
+import LandingPage from "../mainactivity/landingpage.component";
 //import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 const Schema = yup.object().shape({
-  loginemail: yup
+  name: yup
     .string()
     .required("Email is required")
     .email("Email is invalid")
@@ -14,7 +16,7 @@ const Schema = yup.object().shape({
       /^[a-zA-Z0-9]+@miraclesoft\.com$/,
       "Email must match company domain"
     ),
-  loginpwd: yup
+  password: yup
     .string()
     //.required("Password is required.")
     // .min(5).max(12)
@@ -25,12 +27,24 @@ const Schema = yup.object().shape({
 });
 
 const Login = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
   const { handleSubmit, register, errors } = useForm({
     resolver: yupResolver(Schema),
   });
 
   const onSubmitHandler = (data) => {
     console.log("formdata:", data);
+    axios.post("http://localhost:3007/login/", data).then(
+      (response) => {
+        // {
+        //   isLoggedIn ? <LandingPage /> : null
+        // }
+        console.log(response);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   };
 
   return (
@@ -43,12 +57,12 @@ const Login = () => {
           <input
             type="email"
             className="form-control"
-            name="loginemail"
+            name="name"
             placeholder="Enter email"
             ref={register}
           />
           <div className="error-msg">
-            {errors.loginemail && <p>{errors.loginemail.message}</p>}
+            {errors.name && <p>{errors.name.message}</p>}
           </div>
         </div>
 
@@ -57,11 +71,12 @@ const Login = () => {
           <input
             type="password"
             className="form-control"
-            name="loginpwd"
+            name="password"
             placeholder="Enter password"
+            ref={register}
           />
           <div className="error-msg">
-            {errors.loginpwd && <p>{errors.loginpwd.message}</p>}
+            {errors.password && <p>{errors.password.message}</p>}
           </div>
         </div>
 
