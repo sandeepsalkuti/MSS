@@ -3,9 +3,11 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { NavLink } from "react-router-dom";
+
 import CheckInForm from '../checkinform/CheckInForm';
 import DailyActivity from '../dailyactivity/DailyActivity';
 import Landing from '../mainactivity/landingpage.component'
+
 import AppContext from "../AppContext";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
@@ -29,15 +31,15 @@ const Schema = yup.object().shape({
 });
 
 const Login = () => {
-  const {loginstatus, loginresponse, loginAsync} = useContext(AppContext)
- 
+  const { loginstatus, loginresponse, loginAsync } = useContext(AppContext);
+
   const { handleSubmit, register, errors } = useForm({
     resolver: yupResolver(Schema),
   });
 
   const onSubmitHandler = (data) => {
     console.log("formdata:", data);
-    loginAsync(data)
+    loginAsync(data);
   };
 
   return (
@@ -55,7 +57,7 @@ const Login = () => {
             ref={register}
           />
           <div className="error-msg">
-        {errors.name && <p>{errors.name.message}</p>}
+            {errors.name && <p>{errors.name.message}</p>}
           </div>
         </div>
 
@@ -92,7 +94,7 @@ const Login = () => {
         </button>
         
         <p className="forgot-password text-right">
-         <a href="#">Forget password?</a>
+          <a href="#">Forget password?</a>
         </p>
       </form>
 
@@ -101,8 +103,7 @@ const Login = () => {
           New User?
         </NavLink>
       </p>
-      {loginstatus && loginresponse.role === "Bench_Employee" ? 
-      null : ""}
+      {loginstatus && loginresponse.role === "Bench_Employee" ? null : ""}
     </div>
   );
 };
