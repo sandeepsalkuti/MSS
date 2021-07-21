@@ -29,28 +29,6 @@ const LandingPage = () => {
   };
 
   return (
-    /* <Router>
-        <div style={{ width: "300px", minHeight: "200px", marginLeft: "45px" }}>
-          <Button type="rounded" onClick={detailsHandler}>
-            UserDetails
-          </Button>
-          <Route path="/user-details" component={UserDetails} />
-        </div>
-        <div
-          style={{
-            width: "300px",
-            minHeight: "100px",
-            marginTop: "10px",
-            marginLeft: "30px",
-            padding: "10px 20px",
-          }}
-        >
-          <Button type="rounded" onClick={activityHandler}>
-            UserActivity
-          </Button>
-          <Route path="/user-activity" component={UserActivity} />
-        </div>
-      </Router> */
     <div>
       <div className="App">
         <nav className="navbar navbar-expand-lg navbar-light fixed-top">
@@ -77,7 +55,7 @@ const LandingPage = () => {
           </div>
         </nav>
         <div>
-          {loginstatus && loginresponse.role === "Mangerial_Role" ? (
+          {loginstatus && loginresponse.role === "Managerial_Role" ? (
             <h1>You are in Manager Page, Coming Soon!!...</h1>
           ) : (
             <DailyActivity />
@@ -86,9 +64,12 @@ const LandingPage = () => {
         <Switch>
           <Route path="/CheckIn" component={CheckInForm} />
           <Route path="/DailyActivity" component={DailyActivity} />
+          {/* <Route path="/Logout">
+            {setLoginStatus(false)}
+          </Route> */}
           <Route path="/Logout">
-            {loginstatus ? setLoginStatus(false) : ""}
-          </Route>
+                { <Redirect to="/Login"/> }
+              </Route>
         </Switch>
       </div>
     </div>

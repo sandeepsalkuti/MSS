@@ -8,6 +8,7 @@ import Register from "./components/signup/register.component";
 import Landing from "./components/mainactivity/landingpage.component";
 import CheckInForm from "./components/checkinform/CheckInForm";
 import DailyActivity from "./components/dailyactivity/DailyActivity";
+import ResetPassword from './components/signup/ResetPassword';
 
 function App() {
   const {loginstatus,registerstatus} = useContext(AppContext)
@@ -74,6 +75,7 @@ function App() {
               <Route path="/Landing" component={Landing} />
               <Route path="/CheckIn" component={CheckInForm} />
               <Route path="/DailyActivity" component={DailyActivity} />
+              <Route path="/ResetPassword" component={ResetPassword}/>
             </Switch>
           </div>
         </div>

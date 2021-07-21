@@ -40,6 +40,7 @@ const Login = () => {
   const onSubmitHandler = (data) => {
     console.log("formdata:", data);
     loginAsync(data);
+
   };
 
   return (
@@ -94,18 +95,24 @@ const Login = () => {
         </button>
         
         <p className="forgot-password text-right">
-          <a href="#">Forget password?</a>
-        </p>
-      </form>
+        <NavLink className="nav-link" to={"/ResetPassword"}>
+          Forgot password?
+        </NavLink>
+      </p>
+    
+      
 
       <p className="forgot-password text-right">
         <NavLink className="nav-link" to={"/register"}>
           New User?
         </NavLink>
       </p>
-      {loginstatus && loginresponse.role === "Bench_Employee" ? null : ""}
+      {loginresponse.role === "Bench_Employee" ? null : ""}
+      </form>
     </div>
+    
   );
+
 };
 
 export default Login;
