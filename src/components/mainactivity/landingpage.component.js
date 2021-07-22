@@ -1,11 +1,12 @@
 import React, { useContext, useEffect } from "react";
-
+import {useHistory} from "react-router-dom"
 //import styles from './landingpage.component.css';
 import UserActivity from "../useractivity/UserActivity";
 import UserDetails from "../userdetails/UserDetails";
 import Button from "../styledcomponents/Button/Button";
 import CheckInForm from "../checkinform/CheckInForm";
 import DailyActivity from "../dailyactivity/DailyActivity";
+import EmployeeData from '../userdata/EmployeeData/EmployeeData';
 import AppContext from "../AppContext";
 import {
   BrowserRouter as Router,
@@ -17,6 +18,7 @@ import {
 import Login from "../signup/login.component";
 
 const LandingPage = () => {
+  let history=useHistory();
   const { loginstatus, loginresponse, setLoginStatus } = useContext(AppContext);
   const detailsHandler = () => {
     //<Link to="/user-details">UserDetails</Link>
@@ -27,6 +29,11 @@ const LandingPage = () => {
     //<Link to="/user-activity">UserActivity</Link>
     alert("activity button clicked");
   };
+
+  const logouthandler=()=>{
+    //setLoginStatus(false);
+    history.push("/Login")
+  }
 
   return (
     <div>
@@ -46,8 +53,13 @@ const LandingPage = () => {
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to={"/Login"}>
-                    Logout
+                  <Link className="nav-link" to={"/EmployeeData"}>
+                    Employeedata
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link" to={"/Logout"}>
+                    <button onClick="logouthandler()">Logout</button>
                   </Link>
                 </li>
               </ul>
@@ -62,14 +74,15 @@ const LandingPage = () => {
           )}
         </div>
         <Switch>
+        <Route path="/EmployeeData" component={EmployeeData} />
           <Route path="/CheckIn" component={CheckInForm} />
           <Route path="/DailyActivity" component={DailyActivity} />
           {/* <Route path="/Logout">
             {setLoginStatus(false)}
           </Route> */}
-          <Route path="/Logout">
+          {/* <Route path="/Logout">
                 { <Redirect to="/Login"/> }
-              </Route>
+              </Route> */}
         </Switch>
       </div>
     </div>
