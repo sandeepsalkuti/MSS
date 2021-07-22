@@ -50,7 +50,7 @@ const ChekInForm = () => {
   };
 
   return (
-    <div>
+  <div>
       <h3>CheckInFrom</h3>
       <form autoComplete="off" onSubmit={handleSubmit(onSubmitHandler)}>
         <div className="form-group">
@@ -142,11 +142,15 @@ const ChekInForm = () => {
           })}
         </div>
 
-        <button type="submit" className="btn btn-primary btn-md btn-block">
-          Submit
-        </button>
+        <div className="col text-center">
+            <button type="submit" className="btn btn-dark btn-lg btn-block" >
+              Submit
+            </button>
+        </div>
       </form>
+      
     </div>
+    
   );
 };
 

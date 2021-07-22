@@ -267,9 +267,11 @@ const DailyActivity = () => {
           })}
         </div> */}
 
-        <button type="submit" className="btn btn-primary btn-md btn-block">
-          Submit
-        </button>
+        <div className="col text-center">
+            <button type="submit" className="btn btn-dark btn-lg btn-block" >
+              Update
+            </button>
+        </div>
       </form>
     </div>
   );

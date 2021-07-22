@@ -154,9 +154,12 @@ function Register() {
           </div>
         </div>
 
+        <div className="col text-center">
         <button type="submit" className="btn btn-dark btn-lg btn-block">
           Register
         </button>
+        </div>
+
         <p className="forgot-password text-right">
           <NavLink className="nav-link" to={"/login"}>
             Already registered?

@@ -89,10 +89,12 @@ const Login = () => {
           </div>
         </div>
 
+        <div className="col text-center">
+            <button type="submit" className="btn btn-dark btn-lg btn-block" >
+              Sign in
+            </button>
+        </div>
         
-        <button type="submit" className="btn btn-dark btn-lg btn-block" >
-          Sign in
-        </button>
         
         <p className="forgot-password text-right">
         <NavLink className="nav-link" to={"/ResetPassword"}>

@@ -26,3 +26,7 @@
 .form-rating {
   margin-top: 5px;
 }
+
+.inner {
+  overflow-y: scroll;
+}
