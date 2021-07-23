@@ -22,6 +22,15 @@ const Schema = yup.object().shape({
       /^[a-zA-Z0-9]+@miraclesoft\.com$/,
       "Email must match company domain"
     ),
+  secretkey: yup.string().required("Secret Key required").min(4).max(4),
+  confirmkey: yup
+  .string()
+  .oneOf(
+    [yup.ref("secretkey"), null],
+    "Wait! Your Secret key doesn't match.."
+  ),
+  
+
   mainpassword: yup
     .string()
     .required("Password is required.")
@@ -123,6 +132,34 @@ function Register() {
             {errors.email && <p>{errors.email.message}</p>}
           </div>
         </div> */}
+        <div className="form-group required">
+        <label>Enter Secret Key</label>
+          <input
+            type="password"
+            className="form-control"
+            name="secretkey"
+            placeholder="Enter 4 digits of secret key"
+            ref={register({ required: true })}
+            required
+          />
+          <div className="error-msg">
+            {errors.secretkey && <p>{errors.secretkey.message}</p>}
+          </div>
+        </div>
+        <div className="form-group required">
+        <label>Confirm Secret key</label>
+          <input
+            type="password"
+            className="form-control"
+            name="confirmkey"
+            placeholder="Enter 4 digits of secret key"
+            ref={register({ required: true })}
+            required
+          />
+          <div className="error-msg">
+            {errors.confirmkey && <p>{errors.confirmkey.message}</p>}
+          </div>
+        </div>
 
         <div className="form-group required">
           <label>Password</label>
