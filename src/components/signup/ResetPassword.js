@@ -18,6 +18,7 @@ const Schema = yup.object().shape({
     /^[a-zA-Z0-9]+@miraclesoft\.com$/,
     "Email must match company domain"
   ),
+  secretkey: yup.string().required("Secret Key required").min(4).max(4),
   mainpassword: yup
     .string()
     .required("Password is required.")
@@ -69,6 +70,21 @@ function ResetPassword() {
           />
           <div className="error-msg">
         {errors.name && <p>{errors.name.message}</p>}
+          </div>
+        </div>
+
+        <div className="form-group required">
+        <label>Enter Secret Key</label>
+          <input
+            type="password"
+            className="form-control"
+            name="secretkey"
+            placeholder="Enter 4 digits of secret key"
+            ref={register({ required: true })}
+            required
+          />
+          <div className="error-msg">
+            {errors.secretkey && <p>{errors.secretkey.message}</p>}
           </div>
         </div>
 

@@ -22,11 +22,11 @@ const Schema = yup.object().shape({
       /^[a-zA-Z0-9]+@miraclesoft\.com$/,
       "Email must match company domain"
     ),
-  secretkey: yup.string().required("Secret Key required").min(4).max(4),
+  secretKey: yup.string().required("Secret Key required").min(4).max(4),
   confirmkey: yup
   .string()
   .oneOf(
-    [yup.ref("secretkey"), null],
+    [yup.ref("secretKey"), null],
     "Wait! Your Secret key doesn't match.."
   ),
   
@@ -56,6 +56,7 @@ function Register() {
 
   const onSubmitHandler = (data) => {
     delete data["mainpassword"];
+    delete data["confirmkey"];
     console.log("formdata:", data);
     registerAsync(data);
     
@@ -137,13 +138,13 @@ function Register() {
           <input
             type="password"
             className="form-control"
-            name="secretkey"
+            name="secretKey"
             placeholder="Enter 4 digits of secret key"
             ref={register({ required: true })}
             required
           />
           <div className="error-msg">
-            {errors.secretkey && <p>{errors.secretkey.message}</p>}
+            {errors.secretKey && <p>{errors.secretKey.message}</p>}
           </div>
         </div>
         <div className="form-group required">
