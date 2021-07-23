@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import "font-awesome/css/font-awesome.min.css";
 import AppContext from "../../AppContext"
-
+import { FaEye, FaEdit, FaTrashAlt } from 'react-icons/fa';
 
 const EmployeeData = () => {
   const { loginstatus, loginresponse, loginAsync } = useContext(AppContext);
@@ -63,15 +63,16 @@ const EmployeeData = () => {
     
       
     // </div>
+    
     <div>
+    
       
     <div className="container">
-      <div className="py-4">
-        <h1>Your activities</h1> 
+    <div className="py-4"> 
         <table class="table border shadow">
           <thead class="thead-dark">
             <tr>
-              <th scope="col">#</th>
+              {/* <th scope="col">#</th> */}
               <th scope="col">Date</th>
               <th scope="col">Task</th>
               <th scope="col">Status</th>
@@ -82,25 +83,24 @@ const EmployeeData = () => {
           {data && data.map((entry,index) =>{
         return(
               <tr>
-                <th scope="row">{index + 1}</th>
-                <td>{entry.date}</td>
-                <td>{entry.task}</td>
-                <td>{entry.status}</td>
-                <td>
+                {/* <th scope="row">{index + 1}</th> */}
+                <td style={{width: "10%"}}>{entry.date}</td>
+                <td style={{width: "60%"}}>{entry.task}</td>
+                <td style={{width: "10%"}}>{entry.status}</td>
+                <td style={{width: "20%"}}>
                   <Link class="btn btn-primary mr-2" to={""}>
-                    View
+                  <FaEye />
                   </Link>
                   <Link
                     class="btn btn-outline-primary mr-2"
-                    to={""}
-                  >
-                    Edit
+                    to={""}>
+                    < FaEdit />
                   </Link>
                   <Link
                     class="btn btn-danger"
                     //onClick={() => deleteUser(user.id)}
-                  >
-                    Delete
+>
+                    <FaTrashAlt/>
                   </Link>
                 </td>
               </tr>
