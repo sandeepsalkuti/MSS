@@ -9,15 +9,20 @@ const EmployeeData = () => {
 
   return (
     <div>
+      
       <h3>Employee Data</h3>
       <div>
         <div>
             <p>Name:</p>
         </div>
         <div>
-            <button  className="btn btn-dark btn-lg btn-block">FetchData</button> 
-            <button  className="btn btn-dark btn-lg btn-block">UpdateData</button> 
-
+            <button style={{marginRight: "10px"}} type="submit" className="btn btn-dark btn-lg btn-block" >
+              Fetch Data
+            </button>
+            
+            <button style={{marginLeft: "10px"}} className="btn btn-dark btn-lg btn-block">
+              UpdateData
+            </button> 
         </div>
       </div>
     
