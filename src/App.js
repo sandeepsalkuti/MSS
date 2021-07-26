@@ -11,6 +11,7 @@ import DailyActivity from "./components/dailyactivity/DailyActivity";
 import ResetPassword from './components/signup/ResetPassword';
 import UserActivity from './components/useractivity/UserActivity';
 import EmployeeData from '../src/components/userdata/EmployeeData/EmployeeData'
+import ManagerData from './components/userdata/ManagerData/ManagerData';
 
 function App() {
   const {loginstatus,registerstatus} = useContext(AppContext)
@@ -80,6 +81,7 @@ function App() {
               <Route path="/ResetPassword" component={ResetPassword}/>
               <Route path="/UserActivity" component={UserActivity} />
               <Route path="/EmployeeData" component={EmployeeData} />
+              <Route path="/ManagerData" component={ManagerData} />
               <Route path="/Logout">
                 <Redirect to="/Login"/> 
               </Route>

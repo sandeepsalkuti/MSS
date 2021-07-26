@@ -7,6 +7,7 @@ import Button from "../styledcomponents/Button/Button";
 import CheckInForm from "../checkinform/CheckInForm";
 import DailyActivity from "../dailyactivity/DailyActivity";
 import EmployeeData from '../userdata/EmployeeData/EmployeeData';
+import ManagerData from "../userdata/ManagerData/ManagerData";
 import AppContext from "../AppContext";
 import {
   BrowserRouter as Router,
@@ -68,7 +69,7 @@ const LandingPage = () => {
         </nav>
         <div>
           {loginstatus && loginresponse.role === "Managerial_Role" ? (
-            <h1>You are in Manager Page, Coming Soon!!...</h1>
+            <ManagerData />
           ) : (
             <DailyActivity />
           )}
