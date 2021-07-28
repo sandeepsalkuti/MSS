@@ -7,7 +7,6 @@ import Button from "../styledcomponents/Button/Button";
 import CheckInForm from "../checkinform/CheckInForm";
 import DailyActivity from "../dailyactivity/DailyActivity";
 import EmployeeData from '../userdata/EmployeeData/EmployeeData';
-import ManagerData from "../userdata/ManagerData/ManagerData";
 import AppContext from "../AppContext";
 import {
   BrowserRouter as Router,
@@ -17,6 +16,7 @@ import {
   Link,
 } from "react-router-dom";
 import Login from "../signup/login.component";
+import ManagerData from "../userdata/ManagerData/ManagerData";
 
 const LandingPage = () => {
   let history=useHistory();
@@ -69,7 +69,7 @@ const LandingPage = () => {
         </nav>
         <div>
           {loginstatus && loginresponse.role === "Managerial_Role" ? (
-            <ManagerData />
+            <ManagerData/>
           ) : (
             <DailyActivity />
           )}

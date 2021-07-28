@@ -15,7 +15,7 @@ const SingleEmployeeData = (props) => {
     const [id, setId] = useState(props);
   
     useEffect(()=>{
-      axios(`http://localhost:8022/findStatusByid/{id}`)
+      axios(`http://localhost:8022/findStatusByid/${id}`)
       .then(response => {
         console.log(response.data);
         setData(response.data)

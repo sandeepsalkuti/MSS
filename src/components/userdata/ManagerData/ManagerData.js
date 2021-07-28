@@ -9,10 +9,10 @@ const ManagerData = () => {
 
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState(null);
+  const [singleData, setSingleData] = useState(null);
   const [error, setError] = useState(null);
-
   useEffect(()=>{
-    axios("http://localhost:3007/tasks/")
+    axios("http://localhost:8022//GetAllBenchEmployeeDetails")
     .then(response => {
       setData(response.data)
     })
@@ -23,7 +23,20 @@ const ManagerData = () => {
     .finally(() =>{
       setLoading(false);
     })
-  }, []);
+  }, [data]);
+
+  const onClickHandler=(id)=>{
+    axios(`http://localhost:8022/findStatusByid/${id}`)
+    .then(response => {
+      console.log(response.data);
+      setSingleData(response.data)
+    })
+    .catch(error => {
+      console.error("Error fetching data: ", error);
+      setError(error);
+    })
+  
+  }
 
     return (
       <div>
@@ -33,8 +46,8 @@ const ManagerData = () => {
             <div class="col-sm-3 " style={{ paddingTop:"5px"}}>
               {data && data.map((userName) =>{
                 return (
-                  <div style={{ backgroundColor: "white", border: "2px solid black", margin: "5px", }}>
-                    <p style={{fontSize: "20px", padding: "5px", textAlign:"center"}}>{userName.name}</p>
+                  <div style={{ backgroundColor: "white", border: "2px solid black", margin: "5px" }}   >
+                    <p style={{fontSize: "20px", padding: "5px", textAlign:"center"}}><button onClick={onClickHandler(userName.uid)}>{userName.name}</button></p>
                     </div>
                 );
               })}
@@ -72,7 +85,7 @@ const ManagerData = () => {
             </tr>
           </thead>
           <tbody>
-          {data && data.map((entry,index) =>{
+          {singleData && singleData.map((entry,index) =>{
         return(
               <tr>
                 {/* <th scope="row">{index + 1}</th> */}
