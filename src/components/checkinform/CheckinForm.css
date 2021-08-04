@@ -30,3 +30,6 @@
 .inner {
   overflow-y: scroll;
 }
+.main-auto {
+  padding-left: 850px;
+}

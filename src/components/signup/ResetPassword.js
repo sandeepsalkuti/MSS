@@ -1,23 +1,24 @@
-
-import React,{useContext, useState} from "react";
+import React, { useState, useContext } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import axios from "axios";
 import "../../App.css";
+import { NavLink } from "react-router-dom";
 import AppContext from "../AppContext";
-import { BrowserRouter as Link, NavLink } from "react-router-dom";
+import "react-notifications/lib/notifications.css";
+import { NotificationManager } from "react-notifications";
 
 // Validation Schema using Yup
 const Schema = yup.object().shape({
   name: yup
-  .string()
-  .required("Email is required")
-  .email("Email is invalid")
-  .matches(
-    /^[a-zA-Z0-9]+@miraclesoft\.com$/,
-    "Email must match company domain"
-  ),
+    .string()
+    .required("Email is required")
+    .email("Email is invalid")
+    .matches(
+      /^[a-zA-Z0-9]+@miraclesoft\.com$/,
+      "Email must match company domain"
+    ),
   secretkey: yup.string().required("Secret Key required").min(4).max(4),
   mainpassword: yup
     .string()
@@ -36,7 +37,9 @@ const Schema = yup.object().shape({
 });
 
 function ResetPassword() {
-  const [authenticated,setAuthenticated]=useState(false);
+  const { passwordAsync } = useContext(AppContext);
+
+  const [authenticated, setAuthenticated] = useState(false);
   const { handleSubmit, register, errors } = useForm({
     resolver: yupResolver(Schema),
   });
@@ -44,15 +47,16 @@ function ResetPassword() {
   const onSubmitHandler = (data) => {
     delete data["mainpassword"];
     console.log("formdata:", data);
-    axios.post("http://localhost:8022/ResetPassword", data).then(
-      (response) => {
-        setAuthenticated(response);
-      },
-      (error) => {
-        console.log(error);
-      }
-    )
-    
+    passwordAsync(data);
+    // axios.post("http://localhost:8022/ResetPassword", data).then(
+    //   (response) => {
+    //     setAuthenticated(response);
+    //     NotificationManager.success("", "Reset Password Successfully", 1000);
+    //   },
+    //   (error) => {
+    //     console.log(error);
+    //   }
+    // );
   };
 
   return (
@@ -69,12 +73,12 @@ function ResetPassword() {
             ref={register}
           />
           <div className="error-msg">
-        {errors.name && <p>{errors.name.message}</p>}
+            {errors.name && <p>{errors.name.message}</p>}
           </div>
         </div>
 
         <div className="form-group required">
-        <label>Enter Secret Key</label>
+          <label>Enter Secret Key</label>
           <input
             type="password"
             className="form-control"
@@ -117,15 +121,22 @@ function ResetPassword() {
           </div>
         </div>
 
-        <button type="submit" className="btn btn-dark btn-lg btn-block">
-          Reset
-        </button>
+        <div className="col text-center">
+          <button type="submit" className="btn btn-dark btn-lg btn-block">
+            Reset
+          </button>
+        </div>
+
         <p className="forgot-password text-right">
           <NavLink className="nav-link" to={"/login"}>
             back to login page?
           </NavLink>
         </p>
-        {authenticated ? <h2>Password reset was successful</h2>: <h3>Make sure your credentials are correct</h3>}
+        {/* {authenticated ? (
+          <h2>Password reset was successful</h2>
+        ) : (
+          <h3>Make sure your credentials are correct</h3>
+        )} */}
       </form>
     </div>
   );

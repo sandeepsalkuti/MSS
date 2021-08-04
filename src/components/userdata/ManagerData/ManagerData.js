@@ -1,137 +1,128 @@
-import { render } from "@testing-library/react";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom"; 
-import { FaEye, FaEdit, FaTrashAlt } from 'react-icons/fa';
-
+import { Switch, Route, Link } from "react-router-dom";
 
 const ManagerData = () => {
+  const [data, setData] = useState("");
+  const [singleData, setSingleData] = useState("");
 
-  const [loading, setLoading] = useState(true);
-  const [data, setData] = useState(null);
-  const [singleData, setSingleData] = useState(null);
-  const [error, setError] = useState(null);
-  useEffect(()=>{
-    axios("http://localhost:8022//GetAllBenchEmployeeDetails")
-    .then(response => {
-      setData(response.data)
-    })
-    .catch(error => {
-      console.error("Error fetching data: ", error);
-      setError(error);
-    })
-    .finally(() =>{
-      setLoading(false);
-    })
+  const managerdata = async () => {
+    await axios("http://localhost:8022//GetAllBenchEmployeeDetails")
+      .then((response) => {
+        setData(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+        // console.error("Error fetching data: ", error);
+        // setError(error);
+      });
+  };
+  useEffect(() => {
+    managerdata();
   }, [data]);
 
-  const onClickHandler=(id)=>{
-    axios(`http://localhost:8022/findStatusByid/${id}`)
-    .then(response => {
-      console.log(response.data);
-      setSingleData(response.data)
-    })
-    .catch(error => {
-      console.error("Error fetching data: ", error);
-      setError(error);
-    })
-  
-  }
+  const onClickHandler = async (id) => {
+    await axios(`http://localhost:8022/findStatusByid/${id}`)
+      .then((response) => {
+        console.log(response.data);
+        setSingleData(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+        // console.error("Error fetching data: ", error);
+        // setError(error);
+      });
+  };
 
-    return (
-      <div>
-        <h3>In User Activity Page</h3>
+  return (
+    <div>
+      <h3>Manager View Page</h3>
+      <div className="App">
+        <nav className="navbar navbar-expand-lg navbar-light fixed-top">
+          <div className="container">
+            <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
+              <ul className="navbar-nav main-auto">
+                {/* <li className="nav-item">
+                  <Link className="nav-link" to={"/EmployeeData"}>
+                    Employee's-Tasks
+                  </Link>
+                </li> */}
+                <li className="nav-item">
+                  <Link className="nav-link" to={"/Logout"}>
+                    <button onClick="logouthandler()">Logout</button>
+                  </Link>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+        <Switch>
+          {/* <Route path="/EmployeeData" component={EmployeeData} /> */}
+        </Switch>
         <div class="container">
           <div class="row">
-            <div class="col-sm-3 " style={{ paddingTop:"5px"}}>
-              {data && data.map((userName) =>{
-                return (
-                  <div style={{ backgroundColor: "white", border: "2px solid black", margin: "5px" }}   >
-                    <p style={{fontSize: "20px", padding: "5px", textAlign:"center"}}><button onClick={onClickHandler(userName.uid)}>{userName.name}</button></p>
+            <div class="col-sm-3 " style={{ paddingTop: "5px" }}>
+              {data &&
+                data.map((userName) => {
+                  return (
+                    <div
+                      style={{
+                        backgroundColor: "white",
+                        border: "2px solid black",
+                        margin: "5px",
+                      }}
+                    >
+                      <p
+                        style={{
+                          fontSize: "20px",
+                          padding: "5px",
+                          textAlign: "center",
+                        }}
+                        onClick={() => onClickHandler(userName.uid)}
+                      >
+                        {userName.name.substr(0, userName.name.indexOf("@"))}
+                      </p>
                     </div>
-                );
-              })}
+                  );
+                })}
             </div>
-            <div class="col-sm-9" style={{backgroundColor:"#f0f0f0", paddingTop:"5px"}}>
-            {/* {data && data.map((userName) =>{
-                return (
-                  <div class="row" style={{ backgroundColor: "white", border: "2px solid black" }}>
-                    <div class="col-sm-2" style={{borderRight: "2px solid black"}}>
-                      <p style={{fontSize: "18px", padding: "3px"}}>{userName.id}</p>
-                    </div>
-                    
-                    <div class= "col-sm-8" style={{borderRight: "2px solid black"}}>
-                      <p style={{fontSize: "18px", padding: "3px"}}>{userName.task}</p>
-                    </div>
-
-                    <div class= "col-sm-2">
-                      <p style={{fontSize: "18px", padding: "3px"}}>{userName.name}</p>
-                    </div>
-                  </div>
-                    
-                );
-              })} */}
-
-<div className="container">
-      <div className="py-4"> 
-        <table class="table border shadow">
-          <thead class="thead-dark">
-            <tr>
-              {/* <th scope="col">#</th> */}
-              <th scope="col">Date</th>
-              <th scope="col">Task</th>
-              <th scope="col">Status</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-          {singleData && singleData.map((entry,index) =>{
-        return(
-              <tr>
-                {/* <th scope="row">{index + 1}</th> */}
-                <td style={{width: "10%"}}>{entry.date}</td>
-                <td style={{width: "60%"}}>{entry.task}</td>
-                <td style={{width: "10%"}}>{entry.status}</td>
-                <td style={{width: "20%"}}>
-                  <Link class="btn btn-primary mr-2" to={""}>
-                  <FaEye />
-                  </Link>
-                  <Link
-                    class="btn btn-outline-primary mr-2"
-                    to={""}>
-                    < FaEdit />
-                  </Link>
-                  <Link
-                    class="btn btn-danger"
-                    //onClick={() => deleteUser(user.id)}
->
-                    <FaTrashAlt/>
-                  </Link>
-                </td>
-              </tr>
-           );})}
-          </tbody>
-        </table>
-      </div>
-    </div>
+            <div
+              class="col-sm-9"
+              style={{ backgroundColor: "#f0f0f0", paddingTop: "5px" }}
+            >
+              <div className="container">
+                <div className="py-4">
+                  <table class="table border shadow">
+                    <thead class="thead-dark">
+                      <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Task</th>
+                        <th scope="col">Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {singleData &&
+                        singleData.map((entry, index) => {
+                          return (
+                            <tr>
+                              <th scope="row">{index + 1}</th>
+                              <td style={{ width: "18%" }}>{entry.date}</td>
+                              <td style={{ width: "45%" }}>{entry.task}</td>
+                              <td style={{ width: "20%" }}>{entry.status}</td>
+                            </tr>
+                          );
+                        })}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-  
-
-        
-        
-        {/* <div>
-          {data && data.map((userName) =>{
-            return (
-              <div>
-                <h1>{userName.email}</h1>
-              </div>
-            );
-          })}
-        </div> */}
-      </div> 
-    );
-}
+      </div>
+    </div>
+  );
+};
 
 export default ManagerData;

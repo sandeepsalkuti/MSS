@@ -1,27 +1,40 @@
-import {useContext} from 'react';
-import AppContext from './components/AppContext'
+import { useContext } from "react";
+import AppContext from "./components/AppContext";
 import "./App.css";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
-import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  Redirect,
+} from "react-router-dom";
 import Login from "./components/signup/login.component";
 import Register from "./components/signup/register.component";
 import Landing from "./components/mainactivity/landingpage.component";
 import CheckInForm from "./components/checkinform/CheckInForm";
 import DailyActivity from "./components/dailyactivity/DailyActivity";
-import ResetPassword from './components/signup/ResetPassword';
-import UserActivity from './components/useractivity/UserActivity';
-import EmployeeData from '../src/components/userdata/EmployeeData/EmployeeData'
-import ManagerData from './components/userdata/ManagerData/ManagerData';
+import ResetPassword from "./components/signup/ResetPassword";
+import UserActivity from "./components/useractivity/UserActivity";
+import EmployeeData from "../src/components/userdata/EmployeeData/EmployeeData";
+import ManagerData from "./components/userdata/ManagerData/ManagerData";
+import ViewEmployee from "./components/userdata/EmployeeData/ViewEmployee";
+import EditEmployee from "./components/userdata/EmployeeData/EditEmployee";
+import About from "./components/about/About";
+
+import { NotificationContainer } from "react-notifications";
 
 function App() {
-  const {loginstatus,registerstatus} = useContext(AppContext)
-  
+  const { loginstatus, registerstatus, passwordstatus } =
+    useContext(AppContext);
+
   return (
     <Router>
       <div className="App">
+        <NotificationContainer />
         <nav className="navbar navbar-expand-lg navbar-light fixed-top">
-          <div className="container">
-            <Link className="navbar-brand" to={"/Login"}>
+          <div className="container main-div">
+            <Link className="navbar-brand" to={"/About"}>
               Miracle Software Systems
             </Link>
             <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
@@ -62,14 +75,18 @@ function App() {
         <div className="outer">
           <div className="inner">
             <Switch>
-              <Route exact path="/">
-                {loginstatus ? <Redirect to="/Landing"/> : <Redirect to="/Login"/>}
+              <Route exact path="/" component={About}>
+                {/* {loginstatus ? (
+                  <Redirect to="/Landing" />
+                ) : (
+                  <Redirect to="/Login" />
+                )} */}
               </Route>
               <Route path="/Login">
-                {loginstatus ? <Redirect to="/Landing"/> : <Login/>}
+                {loginstatus ? <Redirect to="/Landing" /> : <Login />}
               </Route>
               <Route path="/Register">
-                {registerstatus ? <Redirect to="/Login"/> : <Register/>}
+                {registerstatus ? <Redirect to="/Login" /> : <Register />}
               </Route>
               {/* <Route path="/Logout">
                 {loginstatus ? <Redirect to="/Login"/> : ""}
@@ -78,12 +95,18 @@ function App() {
               <Route path="/Landing" component={Landing} />
               <Route path="/CheckIn" component={CheckInForm} />
               <Route path="/DailyActivity" component={DailyActivity} />
-              <Route path="/ResetPassword" component={ResetPassword}/>
+              <Route path="/ResetPassword">
+                {passwordstatus ? <Redirect to="/Login" /> : <ResetPassword />}
+              </Route>
+              {/* <Route path="/ResetPassword" component={ResetPassword} /> */}
               <Route path="/UserActivity" component={UserActivity} />
               <Route path="/EmployeeData" component={EmployeeData} />
               <Route path="/ManagerData" component={ManagerData} />
+              <Route path="/ViewEmployee" component={ViewEmployee} />
+              <Route path="/EditEmployee" component={EditEmployee} />
+              <Route path="/About" component={About} />
               <Route path="/Logout">
-                <Redirect to="/Login"/> 
+                <Redirect to="/Login" />
               </Route>
             </Switch>
           </div>

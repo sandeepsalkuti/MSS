@@ -1,13 +1,11 @@
-
-import React,{useContext} from "react";
+import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import Login from "./login.component";
 import * as yup from "yup";
-import axios from "axios";
 import "../../App.css";
 import AppContext from "../AppContext";
-import { BrowserRouter as Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import "react-notifications/lib/notifications.css";
 
 // Validation Schema using Yup
 const Schema = yup.object().shape({
@@ -24,12 +22,11 @@ const Schema = yup.object().shape({
     ),
   secretKey: yup.string().required("Secret Key required").min(4).max(4),
   confirmkey: yup
-  .string()
-  .oneOf(
-    [yup.ref("secretKey"), null],
-    "Wait! Your Secret key doesn't match.."
-  ),
-  
+    .string()
+    .oneOf(
+      [yup.ref("secretKey"), null],
+      "Wait! Your Secret key doesn't match.."
+    ),
 
   mainpassword: yup
     .string()
@@ -48,9 +45,9 @@ const Schema = yup.object().shape({
 });
 
 function Register() {
-  const {registerAsync} = useContext(AppContext)
+  const { registerAsync } = useContext(AppContext);
 
-  const { handleSubmit, register, errors } = useForm({
+  const { handleSubmit, register, errors, formState } = useForm({
     resolver: yupResolver(Schema),
   });
 
@@ -59,7 +56,6 @@ function Register() {
     delete data["confirmkey"];
     console.log("formdata:", data);
     registerAsync(data);
-    
   };
 
   return (
@@ -111,7 +107,7 @@ function Register() {
           <label>Select Employment Type</label>
           <select ref={register} name="role" className="form-control">
             <option value="Bench_Employee">Member</option>
-            <option value="Mangerial_Role">Manager</option>
+            <option value="Managerial_Role">Manager</option>
           </select>
         </div>
 
@@ -134,7 +130,7 @@ function Register() {
           </div>
         </div> */}
         <div className="form-group required">
-        <label>Enter Secret Key</label>
+          <label>Enter Secret Key</label>
           <input
             type="password"
             className="form-control"
@@ -148,7 +144,7 @@ function Register() {
           </div>
         </div>
         <div className="form-group required">
-        <label>Confirm Secret key</label>
+          <label>Confirm Secret key</label>
           <input
             type="password"
             className="form-control"
@@ -193,9 +189,13 @@ function Register() {
         </div>
 
         <div className="col text-center">
-        <button type="submit" className="btn btn-dark btn-lg btn-block">
-          Register
-        </button>
+          <button
+            type="submit"
+            // disabled={!formState.isValid}
+            className="btn btn-dark btn-lg btn-block"
+          >
+            Register
+          </button>
         </div>
 
         <p className="forgot-password text-right">

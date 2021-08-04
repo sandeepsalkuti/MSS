@@ -1,40 +1,15 @@
-import React, { useContext, useEffect } from "react";
-import {useHistory} from "react-router-dom"
-//import styles from './landingpage.component.css';
-import UserActivity from "../useractivity/UserActivity";
-import UserDetails from "../userdetails/UserDetails";
-import Button from "../styledcomponents/Button/Button";
+import React, { useContext } from "react";
+import "./landingpage.component.css";
 import CheckInForm from "../checkinform/CheckInForm";
 import DailyActivity from "../dailyactivity/DailyActivity";
-import EmployeeData from '../userdata/EmployeeData/EmployeeData';
+import EmployeeData from "../userdata/EmployeeData/EmployeeData";
 import AppContext from "../AppContext";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-  Link,
-} from "react-router-dom";
-import Login from "../signup/login.component";
+import { Switch, Route, Link } from "react-router-dom";
+import { NavDropdown } from "react-bootstrap";
 import ManagerData from "../userdata/ManagerData/ManagerData";
 
 const LandingPage = () => {
-  let history=useHistory();
-  const { loginstatus, loginresponse, setLoginStatus } = useContext(AppContext);
-  const detailsHandler = () => {
-    //<Link to="/user-details">UserDetails</Link>
-    alert("details button clicked");
-  };
-
-  const activityHandler = () => {
-    //<Link to="/user-activity">UserActivity</Link>
-    alert("activity button clicked");
-  };
-
-  const logouthandler=()=>{
-    //setLoginStatus(false);
-    history.push("/Login")
-  }
+  const { loginstatus, loginresponse } = useContext(AppContext);
 
   return (
     <div>
@@ -42,7 +17,7 @@ const LandingPage = () => {
         <nav className="navbar navbar-expand-lg navbar-light fixed-top">
           <div className="container">
             <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
-              <ul className="navbar-nav navbar-right">
+              <ul className="navbar-nav main-auto">
                 <li className="nav-item">
                   <Link className="nav-link" to={"/CheckIn"}>
                     CheckIn
@@ -58,24 +33,44 @@ const LandingPage = () => {
                     Employeedata
                   </Link>
                 </li>
-                <li className="nav-item">
+                <NavDropdown
+                  align="start"
+                  title="UserProfile"
+                  id="basic-nav-dropdown"
+                >
+                  <NavDropdown.Item href="">Profile</NavDropdown.Item>
+                  <NavDropdown.Item href="/Logout" onClick="logouthandler()">
+                    Logout
+                  </NavDropdown.Item>
+                </NavDropdown>
+                {/* <Dropdown>
+                <Dropdown.Toggle variant="success" id="dropdown-basic">
+                UserProfile
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                  <Dropdown.Item href="#/action-1">Profile</Dropdown.Item>
+                  <Dropdown.Item href="/Logout" onClick="logouthandler()">Logout</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown> */}
+                {/* <li className="nav-item">
                   <Link className="nav-link" to={"/Logout"}>
                     <button onClick="logouthandler()">Logout</button>
                   </Link>
-                </li>
+                </li> */}
               </ul>
             </div>
           </div>
         </nav>
         <div>
           {loginstatus && loginresponse.role === "Managerial_Role" ? (
-            <ManagerData/>
+            <ManagerData />
           ) : (
             <DailyActivity />
           )}
         </div>
         <Switch>
-        <Route path="/EmployeeData" component={EmployeeData} />
+          <Route path="/EmployeeData" component={EmployeeData} />
           <Route path="/CheckIn" component={CheckInForm} />
           <Route path="/DailyActivity" component={DailyActivity} />
           {/* <Route path="/Logout">

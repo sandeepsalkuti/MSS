@@ -129,3 +129,7 @@ html,
   color: red;
   font-weight: bold;
 }
+
+.main-div {
+  margin-left: -700px;
+}

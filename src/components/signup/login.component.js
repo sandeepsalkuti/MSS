@@ -1,15 +1,10 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { NavLink } from "react-router-dom";
-
-import CheckInForm from '../checkinform/CheckInForm';
-import DailyActivity from '../dailyactivity/DailyActivity';
-import Landing from '../mainactivity/landingpage.component'
-
 import AppContext from "../AppContext";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import "react-notifications/lib/notifications.css";
 
 const Schema = yup.object().shape({
   name: yup
@@ -31,7 +26,7 @@ const Schema = yup.object().shape({
 });
 
 const Login = () => {
-  const { loginstatus, loginresponse, loginAsync } = useContext(AppContext);
+  const { loginresponse, loginAsync } = useContext(AppContext);
 
   const { handleSubmit, register, errors } = useForm({
     resolver: yupResolver(Schema),
@@ -40,8 +35,6 @@ const Login = () => {
   const onSubmitHandler = (data) => {
     console.log("formdata:", data);
     loginAsync(data);
-    
-
   };
 
   return (
@@ -91,31 +84,26 @@ const Login = () => {
         </div>
 
         <div className="col text-center">
-            <button type="submit" className="btn btn-dark btn-lg btn-block" >
-              Sign in
-            </button>
+          <button type="submit" className="btn btn-dark btn-lg btn-block">
+            Sign in
+          </button>
         </div>
-        
-        
-        <p className="forgot-password text-right">
-        <NavLink className="nav-link" to={"/ResetPassword"}>
-          Forgot password?
-        </NavLink>
-      </p>
-    
-      
 
-      <p className="forgot-password text-right">
-        <NavLink className="nav-link" to={"/register"}>
-          New User?
-        </NavLink>
-      </p>
-      {loginresponse.role === "Bench_Employee" ? null : ""}
+        <p className="forgot-password text-right">
+          <NavLink className="nav-link" to={"/ResetPassword"}>
+            Forgot password?
+          </NavLink>
+        </p>
+
+        <p className="forgot-password text-right">
+          <NavLink className="nav-link" to={"/register"}>
+            New User?
+          </NavLink>
+        </p>
+        {loginresponse.role === "Bench_Employee" ? null : ""}
       </form>
     </div>
-    
   );
-
 };
 
 export default Login;
