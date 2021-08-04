@@ -25,7 +25,7 @@ import About from "./components/about/About";
 import { NotificationContainer } from "react-notifications";
 
 function App() {
-  const { loginstatus, registerstatus, passwordstatus } =
+  const { loginstatus,loginresponse, registerstatus, passwordstatus } =
     useContext(AppContext);
 
   return (
@@ -92,18 +92,40 @@ function App() {
                 {loginstatus ? <Redirect to="/Login"/> : ""}
               </Route> */}
               {/* <Route path="/Register" component={Register} /> */}
-              <Route path="/Landing" component={Landing} />
-              <Route path="/CheckIn" component={CheckInForm} />
-              <Route path="/DailyActivity" component={DailyActivity} />
+              <Route path="/Landing">
+                {loginstatus ? {Landing} : <Redirect to="/Login" />}
+              </Route> 
+
+              <Route path="/CheckIn">
+                {loginstatus ? {CheckInForm} : <Redirect to="/Login" />}
+              </Route> 
+
+              <Route path="/DailyActivity">
+                {loginstatus ? {DailyActivity} : <Redirect to="/Login" />}
+              </Route> 
+
               <Route path="/ResetPassword">
                 {passwordstatus ? <Redirect to="/Login" /> : <ResetPassword />}
               </Route>
+
               {/* <Route path="/ResetPassword" component={ResetPassword} /> */}
-              <Route path="/UserActivity" component={UserActivity} />
-              <Route path="/EmployeeData" component={EmployeeData} />
-              <Route path="/ManagerData" component={ManagerData} />
-              <Route path="/ViewEmployee" component={ViewEmployee} />
-              <Route path="/EditEmployee" component={EditEmployee} />
+              <Route path="/UserActivity">
+                {loginstatus ? {UserActivity} : <Redirect to="/Login" />}
+              </Route>
+
+              <Route path="/EmployeeData">
+                {loginstatus ? {EmployeeData} :<Redirect to="/Login" />}
+              </Route> 
+
+              <Route path="/ManagerData">
+                {loginstatus && loginresponse.role === "Managerial_Role" ? {ManagerData} :<Redirect to="/Login" />}
+              </Route> 
+              <Route path="/ViewEmployee">
+                {loginstatus ? {ViewEmployee} :<Redirect to="/Login" />}
+              </Route>
+              <Route path="/EditEmployee">
+                {loginstatus ? {EditEmployee} :<Redirect to="/Login" />}
+              </Route> 
               <Route path="/About" component={About} />
               <Route path="/Logout">
                 <Redirect to="/Login" />
